@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func Numbers(word string) int {
+func Answer(word string) (int, error) {
 	arr := strings.Split(strings.Trim(word, "?"), " ")
 	number := 0 
 	for _, element := range(arr) {
@@ -14,5 +14,5 @@ func Numbers(word string) int {
 			number = num 
 		}
 	}
-	return number
+	return number, nil 
 }

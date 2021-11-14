@@ -2,6 +2,10 @@ package electionday
 
 import "fmt"
 
+type ElectionResult struct{
+	Name string 
+	Votes int
+}
 // NewVoteCounter returns a new vote counter with
 // a given number of inital votes.
 func NewVoteCounter(initialVotes int) *int {
