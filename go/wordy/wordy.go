@@ -1,6 +1,7 @@
 package wordy
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -8,6 +9,7 @@ import (
 func Answer(word string) (int, error) {
 	arr := strings.Split(strings.Trim(word, "?"), " ")
 	number := 0 
+	fmt.Print(arr)
 	for _, element := range(arr) {
 		num, err := strconv.Atoi(element)
 		if err == nil {
