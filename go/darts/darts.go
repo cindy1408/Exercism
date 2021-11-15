@@ -1,12 +1,19 @@
 package darts
 
+import (
+	"math"
+)
+
 func Score(x, y float64) int {
+	dx := math.Pow(x - 0, 2)
+	dy := math.Pow(y - 0, 2)
+	maxRadius := dx + dy
 	score := 0
-	if x <= 1 && x >= -1 && y <= 1 && y >= -1 {
+	if maxRadius <= 1 {
 		score = score + 10
-	} else if x <= 5 && x >= -5 && y <= 5 && y >= -5 {
+	} else if maxRadius <= 25 {
 		score = score + 5
-	} else if x <= 10 && x >= -10 && y <= 10 && y >= -10 {
+	} else if maxRadius <= 100 {
 		score = score + 1
 	}
 	return score
