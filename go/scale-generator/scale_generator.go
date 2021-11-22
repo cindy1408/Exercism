@@ -1,71 +1,125 @@
 package scale
 
 import (
+	"fmt"
 	"strings"
 )
 
-func Scale(tonic, interval string) []string {
-	intervalSplit := strings.Split(interval, "")
-	scale := []string{}
-	major := []string{"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#"}
-	minor := []string{"A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A","Bb", "B", "C", "Db"}
 
-		if tonic == "C" || tonic == "G" || tonic == "D" || tonic == "A" || tonic == "E" || tonic == "B" || tonic == "F#" || tonic == "e" || tonic == "b" || tonic == "f#" || tonic == "c#" || tonic == "g#" || tonic == "d#" {
-			// major 	
-			if len(intervalSplit) == 0 {
-				scale = append(scale, tonic)
-				for i:=0; i<14; i++ {
-					if major[i] == scale[len(scale)-1] {
-						if i < len(major){
-							scale = append(scale, major[i+1])
-						}
-					}
+func Scale(tonic, interval string) []string {
+	sharps := []string{"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"}
+	flats := []string{"A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"}
+	steps := strings.Split(interval, "")
+	
+	format := strings.Split(tonic, "")
+	upper := strings.ToUpper(format[0])
+	var newFormat string 
+	if len(format) == 1 {
+		newFormat = strings.ToUpper(format[0])
+	} else {
+		newFormat = upper + format[1]
+	}
+
+
+	result := []string{newFormat}
+ 
+	if tonic == "C" || tonic == "G" || tonic == "D" || tonic == "A" || tonic == "E" || tonic == "B" || tonic == "F#" ||  tonic == "a" || tonic == "e" || tonic == "b" || tonic == "f#" || tonic == "c#" || tonic == "g#" || tonic == "d#" {
+		//interval is 0 
+		if len(steps) == 0 {
+			for i:=0; i< len(sharps)-2; i++ {
+				if sharps[i] == result[len(result)-1] && len(result) < 12 {
+					result = append(result, sharps[i+1])
 				}
-				return scale 
-			}
-			for _, interval := range intervalSplit {
-					if interval == "M" {
-						for i, note := range major {
-							if scale[len(scale)-1] == note {
-								scale = append(scale, scale[i+2])
-							}
-						}
-					} else {
-						for i, note := range major {
-							if scale[len(scale)-1] == note {
-								scale = append(scale, scale[i+1])
-							}
-						}
-					}
+				if i == len(sharps)-3 && len(result) < 12 {
+					i = 0 
+				}
 			}
 		} else {
-			// minor 
-			if len(intervalSplit) == 0 {
-				scale = append(scale, tonic)
-				for j:=0; j<len(minor)-1; j++ {
-					if minor[j] == scale[len(scale)-1] && len(scale) < 12 {
-						if j < len(minor){
-							scale = append(scale, minor[j+1])
+			// interval is given 
+			for _, step := range steps {
+				fmt.Println("this is the step for: ", tonic, step)
+				if step == "M" {
+					// major
+					for i:=0; i< len(sharps)-3; i++ {
+						if result[len(result)-1] == sharps[i] && len(result) < len(steps) {
+							result = append(result, sharps[i+2])
+							fmt.Println("this is major")
+							break
 						}
-					}
+						if i == len(sharps)-2 && len(result) < len(steps) {
+							i = 0 
+						}
+					} 
+				} else if step == "m" {
+					// minor 
+					for i:=0; i< len(sharps)-3; i++ {
+						if result[len(result)-1] == sharps[i] && len(result) < len(steps) {
+							result = append(result, sharps[i+1])
+							fmt.Println("this is minor")
+							break
+						}
+						if i == len(sharps)-2 && len(result) < len(steps) {
+							i = 0 
+						}
+					} 
+				} else {
+					// augment
+					for i:=0; i< len(sharps)-3; i++ {
+						if result[len(result)-1] == sharps[i] && len(result) < len(steps) {
+							result = append(result, sharps[i+3])
+							fmt.Println("this is augmented")
+							break
+						}
+						if i == len(sharps)-2 && len(result) < len(steps) {
+							i = 0 
+						}
+					} 
 				}
-				return scale 
-			}
-			for _, interval := range intervalSplit {
-					if interval == "M" {
-						for i, note := range minor {
-							if scale[len(scale)-1] == note {
-								scale = append(scale, scale[i+2])
-							}
-						}
-					} else {
-						for i, note := range minor {
-							if scale[len(scale)-1] == note {
-								scale = append(scale, scale[i+1])
-							}
-						}
-					}
 			}
 		}
-	return scale
+	} else {
+		if len(steps) == 0 {
+			for i:=0; i< len(flats)-2; i++ {
+				if flats[i] == result[len(result)-1] && len(result) < 12 {
+					result = append(result, flats[i+1])
+				}
+				if i == len(flats)-3 && len(result) < 12 {
+					i = 0 
+				}
+			}
+		} else {
+			for _, step := range steps {
+				fmt.Println(step)
+				if step == "M" {
+					// major
+					for i:=0; i< len(flats)-3; i++ {
+						if result[len(result)-1] == flats[i] && len(result) < len(steps) {
+							result = append(result, flats[i+2])
+							fmt.Println("this is major")
+							break
+						}
+					} 
+				} else if step == "m" {
+					// minor 
+					for i:=0; i< len(flats)-3; i++ {
+						if result[len(result)-1] == flats[i] && len(result) < len(steps) {
+							result = append(result, flats[i+1])
+							fmt.Println("this is minor")
+							break
+						}
+					} 
+				} else {
+					for i:=0; i< len(flats)-3; i++ {
+						if result[len(result)-1] == flats[i] && len(result) < len(steps) {
+							result = append(result, flats[i+3])
+							fmt.Println("this is augmented")
+							break
+						}
+					} 
+				}
+			}
+		}
+	}
+	return result
+
 }
