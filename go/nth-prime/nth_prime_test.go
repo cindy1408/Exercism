@@ -1,6 +1,17 @@
 package prime
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/require"
+)
+
+
+func TestOwnTesting(t *testing.T) {
+	testResult := CheckPrime(1)
+	expected := false
+	require.Equal(t, expected, testResult)
+}
 
 func TestNth(t *testing.T) {
 	for _, test := range tests {
