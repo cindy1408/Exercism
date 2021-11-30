@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math"
 )
-
 func ConvertToBase(inputBase int, inputDigits []int, outputBase int) ([]int, error) {
 	if inputBase < 2 || outputBase < 2 {
 		return nil, fmt.Errorf("there is an issue with %d or %d",inputBase, outputBase)
