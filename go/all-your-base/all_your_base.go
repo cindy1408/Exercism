@@ -13,8 +13,8 @@ func ConvertToBase(inputBase int, inputDigits []int, outputBase int) ([]int, err
 		if value > inputBase && value < 0 {
 			return nil, fmt.Errorf("value %d must be less than input base and more than or equal to 0", value)
 		}
-		result := math.Pow(float64(value), float64(len(inputDigits)-i))
-		results = append(results, int(result))
+		result := math.Pow(float64(inputBase), float64(len(inputDigits)-i))
+		results = append(results, value * int(result))
 	}
 	return results, nil
 }
