@@ -5,9 +5,6 @@ import (
 	"fmt"
 )
 
-// See types.go for the types defined for this exercise.
-
-// TODO: Define the SillyNephewError type here.
 type SillyNephewError struct {
 	errorMessage string
 	numOfCows int
@@ -23,7 +20,6 @@ func someError(num int) error {
 	}
 }
 
-// DivideFood computes the fodder amount per cow for the given cows.
 func DivideFood(weightFodder WeightFodder, cows int) (float64, error) {
 	fodder, err := weightFodder.FodderAmount()
 	if cows == 0 {
@@ -33,7 +29,6 @@ func DivideFood(weightFodder WeightFodder, cows int) (float64, error) {
 		return 0, someError(cows)
 	}
 	if err == ErrScaleMalfunction {
-		fmt.Println("this is scale Malfunction", err)
 		fodder*= 2
 	} else if err != nil {
 		return 0, err
@@ -41,7 +36,5 @@ func DivideFood(weightFodder WeightFodder, cows int) (float64, error) {
 	if fodder < 0 {
 		return 0, errors.New("Negative fodder")
 	}
-	fodderEachCow := fodder / float64(cows)
-	fmt.Println(fodderEachCow, nil)
-	return fodderEachCow, nil
+	return fodder / float64(cows), nil
 }
