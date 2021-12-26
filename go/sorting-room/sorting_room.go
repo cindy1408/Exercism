@@ -65,6 +65,6 @@ func DescribeAnything(i interface{}) string {
 		}
 		return DescribeNumberBox(i.(NumberBox))
 	} else {
-		return fmt.Sprint("Return to sender")
+		return fmt.Sprintln("Return to sender")
 	}
 }
