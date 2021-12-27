@@ -45,26 +45,23 @@ func DescribeFancyNumberBox(fnb FancyNumberBox) string {
 	return fmt.Sprintf("This is a fancy box containing the number %.1f", float64(given))
 }
 
-// DescribeAnything should return a string describing whatever it contains.
 func DescribeAnything(i interface{}) string {
-	iType := fmt.Sprintf("%T", i)
-	fmt.Println("TYPE: ", iType)
-	if iType == "float64" || iType == "int" {
-		valueFloat, _ := i.(float64)
-		valueInt, _ := i.(int)
-		if iType == "int" {
-			return DescribeNumber(float64(valueInt))
-		} else {
-			return DescribeNumber(valueFloat)
-		}
-	} else if iType == "sorting.testNumberBox" || iType == "sorting.FancyNumber" || iType == "sorting.differentFancyNumber" {
-		if iType == "sorting.testNumberBox" {
-			return DescribeNumberBox(i.(NumberBox))
-		} else if iType == "sorting.FancyNumber" || iType == "sorting.differentFancyNumber" {
-			return DescribeFancyNumberBox(i.(FancyNumberBox))
-		}
-		return DescribeNumberBox(i.(NumberBox))
-	} else {
-		return fmt.Sprintln("Return to sender")
+	// value is the actual value, isInt is bool whether the type is true/false
+	int, isInt := i.(int)
+	if isInt {
+		return DescribeNumber(float64(int))
 	}
+	float, isFloat := i.(float64)
+	if isFloat {
+		return DescribeNumber(float)
+	}
+	numbox, isNumbox := i.(NumberBox)
+	if isNumbox {
+		return DescribeNumberBox(numbox)
+	}
+	fancyNumbox, isFancyNumbox := i.(FancyNumberBox)
+	if isFancyNumbox {
+		return DescribeFancyNumberBox(fancyNumbox)
+	}
+	return fmt.Sprintln("Return to sender")
 }
