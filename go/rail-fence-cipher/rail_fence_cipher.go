@@ -21,13 +21,35 @@ func Encode(message string, rails int) string {
 					encoded = append(encoded, messageArr[j])
 				}
 			} else if i % 2 != 0 {
-				increment := (rails-(i+1))*2
-				for j:=i; j<len(messageArr); j+= increment {
-					encoded = append(encoded, messageArr[j])
+				increments := (rails-(i+1))*2
+				firstLoop := true 
+				if firstLoop {
+					for j:=i; j<len(messageArr); j+= increments {
+						encoded = append(encoded, messageArr[j])
+						break 
+					}
+					firstLoop = false 
+				} else {
+					for j:=i; j<len(messageArr); j+= increments/2 {
+						encoded = append(encoded, messageArr[j])
+						break 
+					}
+					firstLoop = true
 				}
 			} else if i % 2 == 0 {
-				for j:=i; j<len(messageArr); j+=i {
-					encoded = append(encoded, messageArr[j])
+				firstLoop := true
+				if firstLoop {
+					for j:=i; j<len(messageArr); j+=i {
+						encoded = append(encoded, messageArr[j])
+						break
+					} 
+					firstLoop = false 
+				} else {
+					for j:=i; j<len(messageArr); j+=i*2 {
+						encoded = append(encoded, messageArr[j])
+						break
+					}
+					firstLoop = true 
 				}
 			}
 		}
