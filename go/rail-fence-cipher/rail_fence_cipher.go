@@ -13,7 +13,7 @@ func Encode(message string, rails int) string {
 	resultMap := map[int][]string{}
 	for _, v := range messageArr {
 		if downRail {
-			// fmt.Println(startRail, v)
+			fmt.Println(startRail, v)
 			resultMap[startRail] = append(resultMap[startRail], v)
 			startRail = startRail + 1
 			if startRail == endRail {
@@ -21,7 +21,7 @@ func Encode(message string, rails int) string {
 				downRail = false
 			}
 		} else {
-			// fmt.Println(endRail, v)
+			fmt.Println(endRail, v)
 			resultMap[endRail] = append(resultMap[endRail], v)
 			endRail = endRail - 1
 			if endRail == 0 {
