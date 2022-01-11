@@ -16,23 +16,26 @@ func Encode(message string, rails int) string {
 		if countj == 1 || countj == rails-1 || countk == rails || countk == 1 {
 			directionUp = !directionUp
 		}
+		fmt.Println(directionUp)
 		if !directionUp {
 			for j:=countj; j<rails; j++ {
+				fmt.Println("1: ", countj)
 				stringMap[countj] = append(stringMap[countj], messageArr[i+j])
-				if countj == rails-1 {
-					countj = 1
-				} else {
-					countj +=1
-				}
+				// if countj == rails-1 {
+				// 	countj = 1
+				// } else {
+				// 	countj +=1
+				// }
 			}
 		} else {
 			for k:=countk; k>1; k-- {
-				stringMap[countk] = append(stringMap[countk], messageArr[i+k])
-				if countk == 2 {
-					countj = rails
-				} else {
-					countk -=1
-				}
+				fmt.Println("2: ", countk)
+				stringMap[countk] = append(stringMap[countk], messageArr[i+k-1])
+				// if countk == 2 {
+				// 	countj = rails
+				// } else {
+				// 	countk -=1
+				// }
 			}
 		}
 	}
