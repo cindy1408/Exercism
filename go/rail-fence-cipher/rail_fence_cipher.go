@@ -39,36 +39,29 @@ func Encode(message string, rails int) string {
 }
 
 func Decode(message string, rails int) string {
-	messageArr := strings.Split(message, "")
-	downRail := true 
-	startRail := 0 
-	endRail := rails - 1 
-	resultMap := map[int][]string{}
-	// for i:= 0; i < rails - 1; i ++ {
-		
-	// }
-	for _, v := range messageArr {
-		if downRail {
-			if startRail == 0 {
-				resultMap[startRail] = append(resultMap[startRail], v)
+	length := len(message)
+	result := make([]rune, length)
+	rail := 0
+	initDist := rails*2 - 2
+	dist := initDist
+	idx := -initDist
+	for _, r := range message {
+		idx += dist
+		if idx >= length {
+			rail++
+			idx = rail
+			dist = initDist - 2*rail
+			if dist == 0 {
+				dist = initDist
 			}
-			startRail = startRail + 1 
-			if startRail == endRail {
-				startRail = 0 
-				downRail = false
-			}
+			result[idx] = r
 		} else {
-			if endRail == 0 {
-				resultMap[startRail] = append(resultMap[startRail], v)
-			}
-			endRail = endRail - 1 
-			if endRail == startRail {
-				endRail = rails -1 
-				downRail = true
+			result[idx] = r
+			dist = initDist - dist
+			if dist == 0 {
+				dist = initDist
 			}
 		}
 	}
-	fmt.Println(messageArr, rails)
-	fmt.Println(resultMap)
-	panic("Please implement the Decode function")
+	return string(result)
 }
