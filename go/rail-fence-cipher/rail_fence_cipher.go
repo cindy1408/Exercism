@@ -1,41 +1,30 @@
 package railfence
 
-import (
-	"fmt"
-	"strings"
-)
-
 func Encode(message string, rails int) string {
-	messageArr := strings.Split(message, "")
-	downRail := true 
-	startRail := 0 
-	endRail := rails-1
-	resultMap := map[int][]string{}
-	for _, v := range messageArr {
-		if downRail {
-			fmt.Println(startRail, v)
-			resultMap[startRail] = append(resultMap[startRail], v)
-			startRail = startRail + 1
-			if startRail == endRail {
-				startRail = 0 
-				downRail = false
+	codes := make([][]rune, rails)
+	rail := 0
+	down := true
+	for _, r := range message {
+		codes[rail] = append(codes[rail], r)
+		if down {
+			rail++
+			if rail == rails {
+				down = false
+				rail -= 2
 			}
 		} else {
-			fmt.Println(endRail, v)
-			resultMap[endRail] = append(resultMap[endRail], v)
-			endRail = endRail - 1
-			if endRail == 0 {
-				endRail = rails-1 
-				downRail = true
+			rail--
+			if rail < 0 {
+				down = true
+				rail += 2
 			}
-		}	
+		}
 	}
-	resultArr := []string{}
-	for _, v := range resultMap {
-		resultArr = append(resultArr, strings.Join(v, ""))
+	encoded := make([]rune, 0, len(message))
+	for _, line := range codes {
+		encoded = append(encoded, line...)
 	}
-	fmt.Println(strings.Join(resultArr, ""))
-	return strings.Join(resultArr, "")
+	return string(encoded)
 }
 
 func Decode(message string, rails int) string {
