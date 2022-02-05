@@ -17,8 +17,10 @@ func Transpose(input []string) []string {
 	}
 	fmt.Println(inputMap)
 	result := []string{}
-	for f, _ := range inputMap {
-		result = append(result, inputMap[f]...)
+	for _, arr := range inputMap {
+		fmt.Println(arr)
+		result = append(result, strings.Join(arr, ""))
 	}
+	fmt.Println("result", result)
 	return result
 }
