@@ -27,10 +27,11 @@ func Transpose(input []string) []string {
 		if len(previousArr) < len(currentArr) {
 			diff := len(currentArr) - len(previousArr)
 			for j := 0; j < diff; j++ {
-				previousArr[len(previousArr)-1] = previousArr[len(previousArr)-1] + " "
+				previousArr = append(previousArr, " ")
+				fmt.Println("THIS ONE: ", previousArr[len(previousArr)-1])
 			}
-			previousArr[len(previousArr)-1] = previousArr[len(previousArr)-1] + " "
 		}
+		fmt.Println(len(previousArr))
 		if i != 0 {
 			updatedInput = append(updatedInput, previousArr)
 		}
@@ -39,9 +40,10 @@ func Transpose(input []string) []string {
 	fmt.Println("UPDATED INPUT: ", updatedInput)
 
 	for _, currentRow := range updatedInput {
+		fmt.Println("LENGTH: ", len(currentRow))
 		fmt.Println("currentROW", currentRow)
-		for i, d := range currentRow {
-			inputMap[i] = append(inputMap[i], d)
+		for k, d := range currentRow {
+			inputMap[k] = append(inputMap[k], d)
 		}
 		fmt.Println(currentRow)
 	}
